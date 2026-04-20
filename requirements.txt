@@ -1,0 +1,4 @@
+# MedGuide AI prototype dependencies
+# Run with: streamlit run app.py
+streamlit>=1.44,<2.0
+openai>=1.0
