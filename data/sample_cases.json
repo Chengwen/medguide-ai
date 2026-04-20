@@ -1,0 +1,174 @@
+[
+  {
+    "id": "respiratory_case",
+    "name": {
+      "zh": "案例 1：呼吸道",
+      "en": "Case 1: Respiratory"
+    },
+    "category": "respiratory",
+    "patient": {
+      "age": 25,
+      "sex": "female",
+      "pregnancy": "no",
+      "chief_complaint": {
+        "zh": "咳嗽三天，伴随低烧",
+        "en": "I have had a cough for 3 days with a low fever."
+      },
+      "duration": {
+        "zh": "3天",
+        "en": "3 days"
+      },
+      "severity": 3,
+      "warning_signs": ["fever"],
+      "history": {
+        "zh": "无明确既往病史",
+        "en": "No significant medical history"
+      },
+      "medications": {
+        "zh": "退烧药",
+        "en": "Fever medicine"
+      },
+      "allergies": {
+        "zh": "无",
+        "en": "None"
+      }
+    },
+    "follow_up_answers": {
+      "breathing_difficulty": "no",
+      "chest_pain": "no",
+      "sputum": "yes",
+      "sputum_color": "yellow_green",
+      "max_temperature": "moderate"
+    },
+    "expected_risk_level": "see_doctor_soon"
+  },
+  {
+    "id": "digestive_case",
+    "name": {
+      "zh": "案例 2：消化道",
+      "en": "Case 2: Digestive"
+    },
+    "category": "digestive",
+    "patient": {
+      "age": 31,
+      "sex": "male",
+      "pregnancy": "not_applicable",
+      "chief_complaint": {
+        "zh": "腹痛一天，伴有呕吐和腹泻",
+        "en": "I have had abdominal pain for one day with vomiting and diarrhea."
+      },
+      "duration": {
+        "zh": "1天",
+        "en": "1 day"
+      },
+      "severity": 3,
+      "warning_signs": ["pain"],
+      "history": {
+        "zh": "轻度胃炎",
+        "en": "Mild gastritis"
+      },
+      "medications": {
+        "zh": "无",
+        "en": "None"
+      },
+      "allergies": {
+        "zh": "无",
+        "en": "None"
+      }
+    },
+    "follow_up_answers": {
+      "vomiting": "yes",
+      "diarrhea": "yes",
+      "blood_in_stool": "no",
+      "pain_location": "upper",
+      "cannot_eat_or_drink": "no"
+    },
+    "expected_risk_level": "outpatient"
+  },
+  {
+    "id": "skin_case",
+    "name": {
+      "zh": "案例 3：皮肤问题",
+      "en": "Case 3: Skin Concern"
+    },
+    "category": "skin",
+    "patient": {
+      "age": 22,
+      "sex": "female",
+      "pregnancy": "no",
+      "chief_complaint": {
+        "zh": "手臂出现红疹两天，有些瘙痒",
+        "en": "I have had an itchy red rash on my arm for two days."
+      },
+      "duration": {
+        "zh": "2天",
+        "en": "2 days"
+      },
+      "severity": 2,
+      "warning_signs": [],
+      "history": {
+        "zh": "近期接触新洗衣液",
+        "en": "Recently used a new laundry detergent"
+      },
+      "medications": {
+        "zh": "无",
+        "en": "None"
+      },
+      "allergies": {
+        "zh": "花粉过敏",
+        "en": "Pollen allergy"
+      }
+    },
+    "follow_up_answers": {
+      "itching": "yes",
+      "wound_or_discharge": "no",
+      "spread_speed": "slow",
+      "skin_fever": "no",
+      "allergen_contact": "yes"
+    },
+    "expected_risk_level": "home_observation"
+  },
+  {
+    "id": "emergency_case",
+    "name": {
+      "zh": "案例 4：高风险",
+      "en": "Case 4: High Risk"
+    },
+    "category": "respiratory",
+    "patient": {
+      "age": 54,
+      "sex": "male",
+      "pregnancy": "not_applicable",
+      "chief_complaint": {
+        "zh": "胸痛并呼吸困难，还出冷汗",
+        "en": "I have chest pain, shortness of breath, and cold sweats."
+      },
+      "duration": {
+        "zh": "今天开始",
+        "en": "Started today"
+      },
+      "severity": 5,
+      "warning_signs": ["pain", "breathing_difficulty"],
+      "history": {
+        "zh": "高血压",
+        "en": "Hypertension"
+      },
+      "medications": {
+        "zh": "降压药",
+        "en": "Blood pressure medication"
+      },
+      "allergies": {
+        "zh": "无",
+        "en": "None"
+      }
+    },
+    "follow_up_answers": {
+      "breathing_difficulty": "yes",
+      "chest_pain": "yes",
+      "sputum": "no",
+      "sputum_color": "none",
+      "max_temperature": "none"
+    },
+    "expected_risk_level": "emergency"
+  }
+]
