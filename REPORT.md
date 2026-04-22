@@ -13,7 +13,7 @@ MedGuide AI is a runnable AI application prototype designed for pre-consultation
 
 Our solution is a bilingual Streamlit prototype that supports login, symptom intake, dynamic follow-up, rule-based risk triage, AI Smart Summary generation, human review, and an evaluation dashboard. The system does not diagnose diseases or recommend treatment. Instead, it organizes pre-consultation information, highlights risk signals, and supports human decision-making.
 
-The project uses a rule-first design for safety. Red-flag symptoms such as chest pain with breathing difficulty, blood in stool, inability to eat or drink, and fast-spreading rash with fever are prioritized before normal recommendations. The optional AI module can call the OpenAI Responses API to generate a triage-facing summary when an API key is configured. If no API key is available, the system automatically uses a local fallback summary so that the classroom demonstration remains stable.
+The project uses a rule-first design for safety. Red-flag symptoms such as chest pain with breathing difficulty, blood in stool, inability to eat or drink, and fast-spreading rash with fever are prioritized before normal recommendations. The optional AI module can call the OpenRouter OpenAI-compatible API with model `minimax/minimax-m2.5:free` to generate a triage-facing summary when an API key is configured. If no API key is available, the system automatically uses a local fallback summary so that the classroom demonstration remains stable.
 
 The prototype demonstrates measurable business and operational value. In a simulated course evaluation scenario, it can reduce average intake time from 8 minutes to 3 minutes, improve structured information completeness from 60% to 90%, and increase estimated daily pre-screening capacity from 50 to 90 cases. These figures are not real hospital statistics; they are course-level assumptions used to demonstrate quantifiable thinking.
 
@@ -66,7 +66,7 @@ The prototype aims to achieve the following functional goals:
 - Generate dynamic follow-up questions based on symptom category.
 - Identify red-flag symptoms through transparent rule logic.
 - Output risk level, recommended department, reasoning, and structured summary.
-- Generate an optional AI Smart Summary using OpenAI API or a local fallback.
+- Generate an optional AI Smart Summary using OpenRouter API or a local fallback.
 - Provide a human review page for triage staff.
 - Provide a dashboard for quantified value and technical credibility discussion.
 
@@ -87,9 +87,9 @@ The project also defines measurable goals for simulated evaluation:
 The current implementation includes:
 
 - `app.py`: main Streamlit application.
-- `requirements.txt`: dependency list, including Streamlit and OpenAI SDK.
+- `requirements.txt`: dependency list, including Streamlit and the OpenAI-compatible Python SDK.
 - `.streamlit/config.toml`: Streamlit theme configuration.
-- `.streamlit/secrets.example.toml`: example secrets file for optional OpenAI API setup.
+- `.streamlit/secrets.example.toml`: example secrets file for optional OpenRouter API setup.
 - `data/rules.json`: bilingual red-flag rule examples.
 - `data/sample_cases.json`: bilingual simulated sample cases.
 - `MedGuide_AI_Presentation.html`: English-first bilingual presentation.
@@ -104,7 +104,7 @@ The current implementation includes:
 | Intake | Collects age, sex, pregnancy status, chief complaint, duration, severity, warning signs, history, medication, and allergies. |
 | Dynamic Follow-up | Asks targeted questions based on detected symptom category. |
 | Triage Result | Displays risk level, recommended department, reasoning, red flags, and export option. |
-| AI Smart Summary | Generates a triage-facing summary through OpenAI API or local fallback. |
+| AI Smart Summary | Generates a triage-facing summary through OpenRouter API or local fallback. |
 | Human Review | Allows staff to review and adjust the system output. |
 | Dashboard | Shows sample-case consistency, red-flag rules, and simulated benefit metrics. |
 
@@ -173,7 +173,7 @@ The most important technical strategy is rule-first safety. Red flags are checke
 
 ### 6.5 AI Smart Summary
 
-The AI Smart Summary module is designed as an optional LLM layer. When `OPENAI_API_KEY` is configured and the OpenAI SDK is available, the app calls the OpenAI Responses API to generate a concise pre-consultation summary for triage staff.
+The AI Smart Summary module is designed as an optional LLM layer. When `OPENROUTER_API_KEY` is configured and the OpenAI-compatible SDK is available, the app calls OpenRouter with model `minimax/minimax-m2.5:free` to generate a concise pre-consultation summary for triage staff.
 
 The prompt is constrained by several safety requirements:
 
@@ -283,7 +283,7 @@ However, the current rule set is simplified for course demonstration. It should 
 
 ### 10.2 LLM Reliability and Hallucination
 
-If the OpenAI API is used, the AI summary may still produce inaccurate or overly confident language if not constrained properly. The prototype reduces this risk by explicitly instructing the model not to diagnose, not to recommend medication, and not to recommend treatment.
+If the OpenRouter / OpenAI-compatible API is used, the AI summary may still produce inaccurate or overly confident language if not constrained properly. The prototype reduces this risk by explicitly instructing the model not to diagnose, not to recommend medication, and not to recommend treatment.
 
 Even so, LLM output should remain auxiliary. The rule-based risk result and human review should remain the final control points.
 
@@ -303,7 +303,7 @@ The project should therefore be presented as a proof of concept, not a clinicall
 
 The team deliberately avoided building an “AI doctor.” This was an important design decision. It reduced medical risk, improved explainability, and made the project more realistic for a course prototype.
 
-The team also chose not to require a database or OpenAI API key for basic operation. This improved reproducibility and made the live demo more stable. At the same time, the project still shows how a real API-based AI module could be integrated.
+The team also chose not to require a database or OpenRouter API key for basic operation. This improved reproducibility and made the live demo more stable. At the same time, the project still shows how a real API-based AI module could be integrated.
 
 ## 11. Team Contribution
 
@@ -348,11 +348,12 @@ Demo accounts:
 | `demo` | `demo123` |
 | `nurse` | `triage123` |
 
-Optional OpenAI setup:
+Optional OpenRouter setup:
 
 ```bash
-set OPENAI_API_KEY=your_api_key_here
-set OPENAI_MODEL=gpt-5-mini
+set OPENROUTER_API_KEY=your_openrouter_api_key_here
+set OPENROUTER_MODEL=minimax/minimax-m2.5:free
+set OPENAI_BASE_URL=https://openrouter.ai/api/v1
 streamlit run app.py
 ```
 
