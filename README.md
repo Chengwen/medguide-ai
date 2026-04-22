@@ -25,7 +25,7 @@ Live demo: https://medguide-ai-demo.streamlit.app/
 - 中文 / English 双语界面。
 - 登录页面与演示账号。
 - 基础信息采集、动态追问、风险分诊、人工复核、规则与评估看板。
-- 可选 OpenAI API 智能摘要模块；未配置 API key 时自动使用本地兜底摘要。
+- 可选 OpenRouter / OpenAI-compatible 智能摘要模块，默认模型为 `minimax/minimax-m2.5:free`；未配置 API key 时自动使用本地兜底摘要。
 - 本地 JSON 规则表和样例病例。
 - 主色调统一为 `#4a90e2`。
 
@@ -135,7 +135,7 @@ The result page includes an AI Smart Summary section.
 
 Two modes are supported:
 
-- Real AI mode: if `OPENAI_API_KEY` is configured and the `openai` package is installed, the app calls the OpenAI Responses API to generate a concise triage-facing summary.
+- Real AI mode: if `OPENROUTER_API_KEY` is configured and the `openai` package is installed, the app calls the OpenRouter OpenAI-compatible API with model `minimax/minimax-m2.5:free` to generate a concise triage-facing summary.
 - Local fallback mode: if no API key or SDK is available, the app generates a structured local fallback summary so the classroom demo remains runnable.
 
 The AI summary is intentionally constrained:
@@ -181,7 +181,7 @@ Current runnable version:
 
 - Frontend and prototype runtime: `Streamlit`.
 - Language: `Python`.
-- Optional AI: OpenAI Responses API via the official `openai` Python SDK.
+- Optional AI: OpenRouter OpenAI-compatible API via the official `openai` Python SDK.
 - Data files: local JSON.
 - State management: `st.session_state`.
 - Theme: `.streamlit/config.toml`.
@@ -231,11 +231,12 @@ streamlit run app.py
 
 Then open the local Streamlit URL shown in the terminal.
 
-Optional OpenAI setup:
+Optional OpenRouter setup:
 
 ```bash
-set OPENAI_API_KEY=your_api_key_here
-set OPENAI_MODEL=gpt-5-mini
+set OPENROUTER_API_KEY=your_openrouter_api_key_here
+set OPENROUTER_MODEL=minimax/minimax-m2.5:free
+set OPENAI_BASE_URL=https://openrouter.ai/api/v1
 streamlit run app.py
 ```
 
