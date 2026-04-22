@@ -2,7 +2,8 @@
 
 **Project:** MedGuide AI: 医疗智能预问诊与风险分诊助手  
 **Submission:** Written report + presentation slides  
-**Presentation date:** 30 April 2026
+**Team members:** Yiyi Shen, Qianfeng Song, Chengwen Sui, Yingchen Wang, and Luliang Zhao  
+**Presentation date:** April 26, 2026
 
 ## 1. Executive Summary
 
