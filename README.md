@@ -7,6 +7,16 @@ AI Pre-Consultation and Risk Triage Assistant
 
 This folder contains the current runnable course prototype for the group project.
 
+Project team:
+
+- Yiyi Shen
+- Qianfeng Song
+- Chengwen Sui
+- Yingchen Wang
+- Luliang Zhao
+
+Presentation date: April 26, 2026.
+
 当前版本已经完成：
 
 - 可运行的 `Streamlit` 原型应用。
@@ -231,7 +241,7 @@ You can also copy `.streamlit/secrets.example.toml` to `.streamlit/secrets.toml`
 
 ## 10. Presentation Plan
 
-For the 15-minute final presentation, use this order:
+For the English-first bilingual 15-minute final presentation, use this order:
 
 1. Problem and project boundary.
 2. Prototype demo with login, bilingual switch, intake, follow-up, triage result, review page.
