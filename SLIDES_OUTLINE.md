@@ -109,7 +109,7 @@ Content:
 - State: `st.session_state`.
 - Data: local JSON rules and sample cases.
 - Logic: symptom category detection + red-flag rules + risk output.
-- AI module: optional OpenAI Responses API for smart summary generation.
+- AI module: optional OpenRouter OpenAI-compatible API with `minimax/minimax-m2.5:free` for smart summary generation.
 - Authentication: demo login, no database required for course prototype.
 
 Diagram:
@@ -129,7 +129,7 @@ Speaker focus:
 
 - Explain why avoiding a database is reasonable for a course prototype.
 - Explain what would change in real deployment.
-- Explain that the OpenAI API is optional and the app has a fallback for demo stability.
+- Explain that the OpenRouter API is optional and the app has a fallback for demo stability.
 
 ## Slide 8. Rule and Safety Design
 
@@ -242,7 +242,7 @@ Not for this prototype. Demo accounts are enough to show the user entry and acce
 
 Answer:
 
-AI is used in two layers. First, the prototype uses AI-style logic for symptom classification, dynamic follow-up, rule-based risk triage, and structured output. Second, the result page can call the OpenAI Responses API to generate a triage-facing smart summary when an API key is configured.
+AI is used in two layers. First, the prototype uses AI-style logic for symptom classification, dynamic follow-up, rule-based risk triage, and structured output. Second, the result page can call the OpenRouter OpenAI-compatible API using `minimax/minimax-m2.5:free` to generate a triage-facing smart summary when an API key is configured.
 
 ### Q3. How are the quantified benefits calculated?
 
