@@ -1,7 +1,7 @@
 # 15-Minute Presentation Slides Outline
 
 **Project:** MedGuide AI: 医疗智能预问诊与风险分诊助手  
-**Format:** 10-12 slides, 15 minutes, all members participate  
+**Format:** English-first bilingual, 10-12 slides, 15 minutes, all members participate  
 **Demo:** Streamlit runnable prototype
 
 ## Slide 1. Title
@@ -10,9 +10,9 @@ Content:
 
 - MedGuide AI.
 - AI Pre-Consultation and Risk Triage Assistant.
-- Team members.
+- Team members: Yiyi Shen, Qianfeng Song, Chengwen Sui, Yingchen Wang, and Luliang Zhao.
 - Course name.
-- Presentation date: 30 April 2026.
+- Presentation date: April 26, 2026.
 
 Speaker focus:
 
@@ -80,7 +80,6 @@ Content:
 Speaker focus:
 
 - Mention bilingual support: 中文 / English.
-- Mention primary UI color: `#4a90e2`.
 
 ## Slide 6. Live Demo Flow
 
@@ -262,7 +261,6 @@ The current prototype has limited symptom coverage and no real clinical validati
 
 ## Slide Design Notes
 
-- Use `#4a90e2` as the main blue.
 - Avoid dense paragraphs; use diagrams and screenshots.
 - Keep bilingual labels where useful, but do not overcrowd slides.
 - Include screenshots of the actual Streamlit pages.
