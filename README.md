@@ -17,6 +17,8 @@ Project team:
 
 Presentation date: April 26, 2026.
 
+Live demo: https://medguide-ai-demo.streamlit.app/
+
 当前版本已经完成：
 
 - 可运行的 `Streamlit` 原型应用。
@@ -267,6 +269,7 @@ In real deployment, the system must pass privacy, security, clinical-safety, and
 ## 12. Related Files
 
 - `MEDICAL_PROTOTYPE_DESIGN.md`: detailed feature pages and flow diagrams.
+- `REPORT.md`: complete written report based on the report outline.
 - `REPORT_OUTLINE.md`: written report structure.
 - `SLIDES_OUTLINE.md`: 15-minute presentation structure.
 - `data/rules.json`: red-flag rule examples.
