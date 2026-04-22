@@ -3,6 +3,7 @@
 **Project:** MedGuide AI: 医疗智能预问诊与风险分诊助手  
 **Format:** English-first bilingual, 10-12 slides, 15 minutes, all members participate  
 **Demo:** Streamlit runnable prototype
+**Live demo link:** https://medguide-ai-demo.streamlit.app/
 
 ## Slide 1. Title
 
@@ -84,6 +85,8 @@ Speaker focus:
 ## Slide 6. Live Demo Flow
 
 Recommended demo sequence:
+
+Live demo link: https://medguide-ai-demo.streamlit.app/
 
 1. Login with `demo / demo123`.
 2. Switch language if needed.
