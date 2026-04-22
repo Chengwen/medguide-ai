@@ -1,8 +1,0 @@
-# MedGuide AI Streamlit theme
-# Primary project color requested for the prototype UI.
-[theme]
-primaryColor = "#4a90e2"
-backgroundColor = "#f6f9fd"
-secondaryBackgroundColor = "#ffffff"
-textColor = "#172033"
-font = "sans serif"
