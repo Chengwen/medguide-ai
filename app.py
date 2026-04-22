@@ -17,7 +17,9 @@ DATA_DIR = BASE_DIR / "data"
 RULES_PATH = DATA_DIR / "rules.json"
 SAMPLE_CASES_PATH = DATA_DIR / "sample_cases.json"
 APP_VERSION = "2026.04.18"
-DEFAULT_OPENAI_MODEL = "gpt-5-mini"
+DEFAULT_OPENAI_MODEL = "minimax/minimax-m2.5:free"
+DEFAULT_OPENAI_BASE_URL = "https://openrouter.ai/api/v1"
+DEFAULT_APP_URL = "https://medguide-ai-demo.streamlit.app/"
 
 RISK_ORDER = {
     "emergency": 4,
@@ -537,26 +539,61 @@ def format_follow_up_answers(follow_up_answers: dict, lang: str) -> str:
 
 
 def get_openai_api_key() -> str:
-    env_key = os.getenv("OPENAI_API_KEY", "")
-    if env_key:
-        return env_key
+    for key_name in ("OPENROUTER_API_KEY", "OPENAI_API_KEY"):
+        env_key = os.getenv(key_name, "")
+        if env_key:
+            return env_key
 
     try:
-        return st.secrets.get("OPENAI_API_KEY", "")
+        return st.secrets.get("OPENROUTER_API_KEY", "") or st.secrets.get("OPENAI_API_KEY", "")
     except Exception:
         return ""
 
 
 def get_openai_model() -> str:
     try:
-        secret_model = st.secrets.get("OPENAI_MODEL", "")
+        secret_model = st.secrets.get("OPENROUTER_MODEL", "") or st.secrets.get("OPENAI_MODEL", "")
     except Exception:
         secret_model = ""
-    return os.getenv("OPENAI_MODEL") or secret_model or DEFAULT_OPENAI_MODEL
+    return os.getenv("OPENROUTER_MODEL") or os.getenv("OPENAI_MODEL") or secret_model or DEFAULT_OPENAI_MODEL
+
+
+def get_openai_base_url() -> str:
+    try:
+        secret_base_url = st.secrets.get("OPENAI_BASE_URL", "") or st.secrets.get("OPENROUTER_BASE_URL", "")
+    except Exception:
+        secret_base_url = ""
+    return os.getenv("OPENAI_BASE_URL") or os.getenv("OPENROUTER_BASE_URL") or secret_base_url or DEFAULT_OPENAI_BASE_URL
 
 
 def openai_ready() -> bool:
     return OpenAI is not None and bool(get_openai_api_key())
+
+
+def ai_config_status(lang: str) -> str:
+    sdk_ok = OpenAI is not None
+    key_ok = bool(get_openai_api_key())
+    model = get_openai_model()
+    base_url = get_openai_base_url()
+
+    if sdk_ok and key_ok:
+        return tr(
+            lang,
+            f"已检测到 OpenRouter / OpenAI-compatible 配置。模型：{model}；Base URL：{base_url}",
+            f"OpenRouter / OpenAI-compatible configuration detected. Model: {model}; Base URL: {base_url}",
+        )
+
+    missing = []
+    if not sdk_ok:
+        missing.append(tr(lang, "openai Python 包未安装", "openai Python package is not installed"))
+    if not key_ok:
+        missing.append(tr(lang, "未读取到 OPENROUTER_API_KEY / OPENAI_API_KEY", "OPENROUTER_API_KEY / OPENAI_API_KEY was not found"))
+
+    return tr(
+        lang,
+        "AI API 未启用：" + "；".join(missing) + "。将使用本地兜底摘要。",
+        "AI API is not enabled: " + "; ".join(missing) + ". Local fallback summary will be used.",
+    )
 
 
 def build_ai_summary_prompt(patient: dict, follow_up_answers: dict, result: dict, lang: str) -> str:
@@ -622,17 +659,29 @@ def generate_local_ai_summary(patient: dict, follow_up_answers: dict, result: di
 
 
 def generate_openai_summary(patient: dict, follow_up_answers: dict, result: dict, lang: str) -> str:
-    client = OpenAI(api_key=get_openai_api_key())
-    response = client.responses.create(
-        model=get_openai_model(),
-        instructions=(
-            "You are a careful medical triage writing assistant for an academic prototype. "
-            "You organize information only and never provide diagnosis, medication, or treatment advice."
-        ),
-        input=build_ai_summary_prompt(patient, follow_up_answers, result, lang),
-        max_output_tokens=450,
+    client = OpenAI(
+        api_key=get_openai_api_key(),
+        base_url=get_openai_base_url(),
+        default_headers={
+            "HTTP-Referer": DEFAULT_APP_URL,
+            "X-OpenRouter-Title": "MedGuide AI",
+        },
     )
-    return response.output_text
+    response = client.chat.completions.create(
+        model=get_openai_model(),
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are a careful medical triage writing assistant for an academic prototype. "
+                    "You organize information only and never provide diagnosis, medication, or treatment advice."
+                ),
+            },
+            {"role": "user", "content": build_ai_summary_prompt(patient, follow_up_answers, result, lang)},
+        ],
+        max_tokens=450,
+    )
+    return response.choices[0].message.content or ""
 
 
 def generate_ai_summary(patient: dict, follow_up_answers: dict, result: dict, lang: str) -> tuple[str, str]:
@@ -641,7 +690,7 @@ def generate_ai_summary(patient: dict, follow_up_answers: dict, result: dict, la
             return generate_openai_summary(patient, follow_up_answers, result, lang), "openai"
         except Exception as error:
             fallback = generate_local_ai_summary(patient, follow_up_answers, result, lang)
-            return f"{fallback}\n\n{tr(lang, '提示：OpenAI API 调用失败，已使用本地兜底摘要。错误：', 'Note: OpenAI API call failed, so local fallback was used. Error: ')}{error}", "fallback"
+            return f"{fallback}\n\n{tr(lang, '提示：OpenRouter / OpenAI-compatible API 调用失败，已使用本地兜底摘要。错误：', 'Note: OpenRouter / OpenAI-compatible API call failed, so local fallback was used. Error: ')}{error}", "fallback"
 
     return generate_local_ai_summary(patient, follow_up_answers, result, lang), "fallback"
 
@@ -1032,28 +1081,16 @@ def render_result(lang: str):
 
     st.markdown(f"### {tr(lang, 'AI 智能摘要', 'AI Smart Summary')}")
     if openai_ready():
-        st.caption(
-            tr(
-                lang,
-                f"已检测到 OpenAI 配置，将使用 Responses API 和模型 {get_openai_model()} 生成摘要。",
-                f"OpenAI configuration detected. The summary will use the Responses API with model {get_openai_model()}.",
-            )
-        )
+        st.caption(ai_config_status(lang))
     else:
-        st.caption(
-            tr(
-                lang,
-                "未检测到 OPENAI_API_KEY 或 openai 包，将使用本地兜底摘要，保证演示可运行。",
-                "OPENAI_API_KEY or the openai package was not detected. A local fallback summary will keep the demo runnable.",
-            )
-        )
+        st.warning(ai_config_status(lang))
 
     if st.button(tr(lang, "生成 AI 摘要", "Generate AI Summary"), type="primary", use_container_width=True):
         summary_text, summary_source = generate_ai_summary(patient, follow_up_answers, result, lang)
         st.session_state["ai_summary"] = {"text": summary_text, "source": summary_source}
 
     if st.session_state.get("ai_summary"):
-        source_label = tr(lang, "真实 OpenAI API", "real OpenAI API") if st.session_state["ai_summary"]["source"] == "openai" else tr(lang, "本地兜底逻辑", "local fallback logic")
+        source_label = tr(lang, "真实 OpenRouter / OpenAI-compatible API", "real OpenRouter / OpenAI-compatible API") if st.session_state["ai_summary"]["source"] == "openai" else tr(lang, "本地兜底逻辑", "local fallback logic")
         st.info(f"{tr(lang, '摘要来源', 'Summary source')}: {source_label}")
         st.markdown(st.session_state["ai_summary"]["text"])
 
