@@ -26,7 +26,7 @@ The core argument of this project is that AI’s most realistic value in healthc
 | Runnable prototype or deep AI analysis | The team built a runnable Streamlit prototype in `app.py`. |
 | Quantifiable benefits and business value | The report compares intake time, completeness, case capacity, and red-flag consistency. |
 | Technology strategy management or entrepreneurship | The project is positioned as a B2B workflow tool for clinics, outpatient departments, and online healthcare platforms. |
-| 15-minute final presentation | The project includes an English-first bilingual HTML presentation and speaker notes. |
+| 15-minute final presentation | The project includes a bilingual HTML presentation and speaker notes. |
 | Critical reflection | The report discusses safety risk, LLM limitation, privacy, scope boundaries, and human oversight. |
 
 ## 3. Problem Background
@@ -92,7 +92,7 @@ The current implementation includes:
 - `.streamlit/secrets.example.toml`: example secrets file for optional OpenRouter API setup.
 - `data/rules.json`: bilingual red-flag rule examples.
 - `data/sample_cases.json`: bilingual simulated sample cases.
-- `MedGuide_AI_Presentation.html`: English-first bilingual presentation.
+- `MedGuide_AI_Presentation.html`: bilingual presentation.
 - `PRESENTATION_SPEAKER_NOTES.md`: bilingual speaker notes.
 
 ### 5.2 Implemented Pages
@@ -273,6 +273,18 @@ Fourth, the system is modular. Rules, sample cases, follow-up questions, and AI 
 
 From an entrepreneurship perspective, the recommended strategy is to start with a narrow pilot: one or two symptom categories in a clinic or online consultation workflow. After validating workflow efficiency and user acceptance, the product can gradually expand to more specialties and integrate with account systems, databases, and audit logs.
 
+## 9.1 Future Development Roadmap
+
+The project can be extended in four practical directions.
+
+First, the product scope can grow from a course prototype into a broader triage-support system. Future versions could cover more specialties such as pediatrics, gynecology, urinary symptoms, and neurology, while also supporting follow-up reminders and appointment-routing recommendations.
+
+Second, the AI layer can become more capable. Instead of relying mainly on keyword and rule logic, future versions could use LLMs for better symptom understanding, more natural follow-up generation, multilingual interaction, and clinician-facing structured summaries.
+
+Third, the technical architecture can be upgraded for real deployment. Important next steps include database-backed case storage, secure authentication, role-based permissions, audit logs, encryption, and API integration with hospital or telemedicine systems.
+
+Fourth, the project can move toward real-world validation. A realistic path would be to build clinician-reviewed rule libraries, conduct limited compliant pilot studies, measure workflow outcomes, and refine the system based on staff feedback and real operational data.
+
 ## 10. Critical Reflection
 
 ### 10.1 Safety Risk
@@ -305,7 +317,21 @@ The team deliberately avoided building an “AI doctor.” This was an important
 
 The team also chose not to require a database or OpenRouter API key for basic operation. This improved reproducibility and made the live demo more stable. At the same time, the project still shows how a real API-based AI module could be integrated.
 
-## 11. Conclusion
+## 11. Team Contribution
+
+Because the project is a group assignment, all members should participate in the full process, final presentation, and Q&A. A recommended contribution structure is:
+
+| Team member | Suggested responsibility |
+| --- | --- |
+| Yiyi Shen | Problem background, project positioning, opening slides. |
+| Qianfeng Song | Scope boundary, solution overview, safety framing. |
+| Chengwen Sui | Prototype implementation, demo flow, technical architecture. |
+| Yingchen Wang | AI usage, rule logic, quantified benefits. |
+| Luliang Zhao | Business strategy, critical reflection, Q&A closing. |
+
+All team members are expected to understand the full project rather than only their assigned section.
+
+## 12. Conclusion
 
 MedGuide AI demonstrates how AI can support healthcare workflows without replacing clinicians. The project focuses on a realistic and safer healthcare AI use case: pre-consultation intake, risk visibility, structured summarization, and human review support.
 
@@ -348,4 +374,3 @@ If no API key is configured, the prototype still runs with a local fallback summ
 ## Appendix B. Safety Disclaimer
 
 This project is for academic demonstration only. It does not provide medical advice, diagnosis, treatment, medication recommendation, or emergency service. Any real medical concern should be handled by qualified healthcare professionals.
-
