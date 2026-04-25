@@ -204,7 +204,7 @@ Q&A prompt:
 | Section | Slides | Time |
 | --- | --- | --- |
 | Problem and scope | 1-3 | 3 minutes |
-| Solution and technical design | 4-6 | 5 minutes |
+| Solution and technical design | 4-6 | 4 minutes |
 | Demo | 7 | 3 minutes |
 | Value and strategy | 8-10 | 3 minutes |
 | Reflection and Q&A transition | 11-12 | 2 minutes |
