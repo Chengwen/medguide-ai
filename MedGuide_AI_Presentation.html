@@ -1,0 +1,700 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MedGuide AI Bilingual Presentation</title>
+  <style>
+    :root {
+      --blue: #4a90e2;
+      --blue-dark: #1f5fa8;
+      --blue-soft: #eaf3ff;
+      --ink: #172033;
+      --muted: #61708a;
+      --line: #dbe8f7;
+      --bg: #f6f9fd;
+      --card: #ffffff;
+      --orange: #f6a23a;
+      --red: #d64545;
+      --green: #2e9d68;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 12% 15%, rgba(74, 144, 226, 0.20), transparent 28%),
+        radial-gradient(circle at 85% 10%, rgba(46, 157, 104, 0.12), transparent 24%),
+        linear-gradient(135deg, #f7fbff 0%, #edf5ff 52%, #f8fbff 100%);
+      color: var(--ink);
+      font-family: "Aptos", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      overflow: hidden;
+    }
+
+    .deck {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+
+    .slide {
+      display: none;
+      width: min(1280px, 94vw);
+      height: min(720px, 92vh);
+      position: absolute;
+      inset: 50% auto auto 50%;
+      transform: translate(-50%, -50%);
+      padding: 46px 60px;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,0.97), rgba(255,255,255,0.93)),
+        repeating-linear-gradient(135deg, rgba(74,144,226,0.035) 0 1px, transparent 1px 18px);
+      border: 1px solid rgba(74, 144, 226, 0.24);
+      border-radius: 34px;
+      box-shadow: 0 28px 80px rgba(31, 95, 168, 0.18);
+      overflow: hidden;
+    }
+
+    .slide.active {
+      display: block;
+      animation: reveal 420ms ease-out;
+    }
+
+    @keyframes reveal {
+      from { opacity: 0; transform: translate(-48%, -50%) scale(0.985); }
+      to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    }
+
+    .slide::after {
+      content: "";
+      position: absolute;
+      right: -90px;
+      bottom: -120px;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(74,144,226,0.18), transparent 66%);
+      pointer-events: none;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      color: var(--blue-dark);
+      background: var(--blue-soft);
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    h1 {
+      margin: 22px 0 10px;
+      max-width: 980px;
+      font-size: 56px;
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+    }
+
+    h2 {
+      margin: 10px 0 22px;
+      max-width: 1050px;
+      font-size: 39px;
+      line-height: 1.1;
+      letter-spacing: -0.035em;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      color: var(--blue-dark);
+      font-size: 21px;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 19px;
+      line-height: 1.45;
+    }
+
+    ul, ol {
+      margin: 10px 0 0;
+      padding-left: 23px;
+      color: var(--ink);
+      font-size: 19px;
+      line-height: 1.34;
+    }
+
+    li { margin: 8px 0; }
+    strong { color: var(--blue-dark); }
+
+    .subtitle {
+      max-width: 880px;
+      font-size: 24px;
+      color: var(--muted);
+    }
+
+    .bilingual {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .zh, .en {
+      position: relative;
+    }
+
+    .lang-label {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.94);
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 20px;
+      box-shadow: 0 16px 36px rgba(23, 32, 51, 0.07);
+    }
+
+    .card.blue {
+      background: linear-gradient(180deg, #f4f9ff, #ffffff);
+      border-color: rgba(74,144,226,0.30);
+    }
+
+    .card.danger {
+      border-color: rgba(214,69,69,0.25);
+      background: linear-gradient(180deg, #fff6f6, #ffffff);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .pill {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--blue-soft);
+      color: var(--blue-dark);
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .node {
+      flex: 1;
+      min-height: 70px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 12px;
+      border-radius: 20px;
+      background: #ffffff;
+      border: 1px solid rgba(74,144,226,0.30);
+      color: var(--blue-dark);
+      font-size: 16px;
+      font-weight: 900;
+      box-shadow: 0 12px 24px rgba(31, 95, 168, 0.08);
+    }
+
+    .arrow {
+      color: var(--blue);
+      font-size: 28px;
+      font-weight: 900;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 18px;
+      font-size: 17px;
+      background: #ffffff;
+      box-shadow: 0 14px 34px rgba(23, 32, 51, 0.06);
+    }
+
+    th {
+      color: #ffffff;
+      background: var(--blue);
+      text-align: left;
+      padding: 13px 14px;
+    }
+
+    td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--ink);
+      vertical-align: top;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .metric {
+      padding: 18px 14px;
+      border-radius: 22px;
+      background: #ffffff;
+      border: 1px solid var(--line);
+      text-align: center;
+    }
+
+    .big-number {
+      font-size: 50px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      color: var(--blue);
+    }
+
+    .metric .label {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .do { border-top: 8px solid var(--green); }
+    .dont { border-top: 8px solid var(--red); }
+
+    .tagline {
+      margin-top: 24px;
+      padding: 18px 22px;
+      border-radius: 22px;
+      color: var(--blue-dark);
+      background: var(--blue-soft);
+      font-size: 22px;
+      font-weight: 900;
+      line-height: 1.35;
+    }
+
+    .tiny {
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .footer {
+      position: absolute;
+      left: 60px;
+      right: 60px;
+      bottom: 22px;
+      display: flex;
+      justify-content: space-between;
+      color: #7c8ca4;
+      font-size: 14px;
+      font-weight: 800;
+    }
+
+    .progress {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100vw;
+      height: 6px;
+      background: rgba(74,144,226,0.16);
+      z-index: 10;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 0;
+      background: var(--blue);
+      transition: width 260ms ease;
+    }
+
+    .nav {
+      position: fixed;
+      right: 24px;
+      bottom: 20px;
+      display: flex;
+      gap: 8px;
+      z-index: 11;
+    }
+
+    button {
+      border: 0;
+      border-radius: 14px;
+      padding: 10px 14px;
+      color: #ffffff;
+      background: var(--blue);
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(74,144,226,0.26);
+    }
+
+    @media print {
+      body { overflow: visible; background: #ffffff; }
+      .deck { height: auto; }
+      .slide {
+        display: block !important;
+        position: relative;
+        inset: auto;
+        transform: none;
+        width: 297mm;
+        height: 167mm;
+        margin: 0 auto;
+        page-break-after: always;
+        box-shadow: none;
+      }
+      .nav, .progress { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <section class="slide active">
+      <span class="eyebrow">Group Project</span>
+      <h1>MedGuide AI</h1>
+      <p class="subtitle">AI Pre-Consultation and Risk Triage Assistant<br>医疗智能预问诊与风险分诊助手</p>
+      <div class="pill-row">
+        <span class="pill">Streamlit Prototype / 可运行原型</span>
+        <span class="pill">Rule-first Triage / 规则优先分诊</span>
+        <span class="pill">AI Smart Summary / AI 智能摘要</span>
+        <span class="pill">Human Review / 人工复核</span>
+      </div>
+      <div class="tagline">Not an AI doctor, but a tool for pre-consultation, risk visibility, and human decision support.<br>不是 AI 医生，而是预问诊、风险可见性与人工决策支持工具。</div>
+      <p class="tiny" style="margin-top:18px;">Live demo: https://medguide-ai-demo.streamlit.app/</p>
+      <div class="footer"><span>Team members: Yiyi Shen, Qianfeng Song, Chengwen Sui, Yingchen Wang, and Luliang Zhao</span><span>April 26, 2026</span></div>
+    </section>
+
+    <section class="slide">
+      <span class="eyebrow">01 · Problem / 问题背景</span>
+      <h2>Pre-consultation intake is slow, incomplete, and hard to standardize<br>门诊前信息采集慢、不完整、难以标准化</h2>
+      <div class="bilingual">
+        <div class="card blue en">
+          <span class="lang-label">English</span>
+          <ul>
+            <li>Patients often provide incomplete symptom descriptions.</li>
+            <li>Manual triage depends heavily on staff experience.</li>
+            <li>Missed red-flag symptoms may create safety risks.</li>
+            <li>Limited clinical resources should focus on urgent cases first.</li>
+          </ul>
+        </div>
+        <div class="card danger zh">
+          <span class="lang-label">中文</span>
+          <ul>
+            <li>患者主诉常常不完整，前台需要重复追问。</li>
+            <li>人工初筛依赖经验，不同人员判断不一致。</li>
+            <li>高风险症状如果遗漏，可能带来安全风险。</li>
+            <li>医护资源有限，需要优先处理真正紧急的病例。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>MedGuide AI</span><span>2 / 12</span></div>
+    </section>
+
+    <section class="slide">
+      <span class="eyebrow">02 · Scope / 项目边界</span>
+      <h2>We are not building an automatic diagnosis system<br>我们明确不做“自动诊断”</h2>
+      <div class="bilingual">
+        <div class="card do">
+          <h3>We Do / 我们做</h3>
+          <ul>
+            <li>Pre-consultation intake / 预问诊信息采集</li>
+            <li>Dynamic follow-up / 动态追问</li>
+            <li>Risk-level suggestion / 风险等级提示</li>
+            <li>Red-flag reminder / 红旗症状提醒</li>
+            <li>Human review support / 人工复核支持</li>
+          </ul>
+        </div>
+        <div class="card dont">
+          <h3>We Do Not Do / 我们不做</h3>
+          <ul>
+            <li>Medical diagnosis / 医学诊断</li>
+            <li>Treatment recommendation / 治疗方案推荐</li>
+            <li>Medication advice / 用药建议</li>
+            <li>Replacing clinicians / 替代医生</li>
+            <li>Processing real patient data / 处理真实患者数据</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>MedGuide AI</span><span>3 / 12</span></div>
+    </section>
+
+    <section class="slide">
+      <span class="eyebrow">03 · Solution / 解决方案</span>
+      <h2>Rule-first safety + AI-style interaction + human oversight<br>规则优先 + AI 式交互 + 人工兜底</h2>
+      <div class="flow">
+        <div class="node">Login<br>登录</div>
+        <div class="arrow">→</div>
+        <div class="node">Intake<br>基础信息</div>
+        <div class="arrow">→</div>
+        <div class="node">Follow-up<br>动态追问</div>
+        <div class="arrow">→</div>
+        <div class="node">Risk Result<br>分诊结果</div>
+        <div class="arrow">→</div>
+        <div class="node">Review<br>人工复核</div>
+      </div>
+      <div class="grid-3" style="margin-top:30px;">
+        <div class="card blue"><h3>Structured Input<br>结构化输入</h3><p>Collect complaint, duration, severity, history, and warning signs.<br>采集主诉、持续时间、严重程度、病史和警示症状。</p></div>
+        <div class="card blue"><h3>Rule Safety<br>规则安全</h3><p>Red flags override normal flow.<br>红旗症状优先触发风险提示。</p></div>
+        <div class="card blue"><h3>AI Summary<br>AI 摘要</h3><p>Optional OpenRouter summary with local fallback.<br>可选 OpenRouter 摘要，无 key 时本地兜底。</p></div>
+      </div>
+      <div class="footer"><span>MedGuide AI</span><span>4 / 12</span></div>
+    </section>
+
+    <section class="slide">
+      <span class="eyebrow">04 · Prototype / 原型页面</span>
+      <h2>Implemented runnable prototype<br>已完成的可运行原型</h2>
+      <div class="grid-4">
+        <div class="metric"><div class="big-number">1</div><div class="label">Login<br>演示登录</div></div>
+        <div class="metric"><div class="big-number">2</div><div class="label">Intake<br>信息采集</div></div>
+        <div class="metric"><div class="big-number">3</div><div class="label">Follow-up<br>动态追问</div></div>
+        <div class="metric"><div class="big-number">4</div><div class="label">Result<br>分诊结果</div></div>
+      </div>
+      <div class="grid-4" style="margin-top:16px;">
+        <div class="metric"><div class="big-number">5</div><div class="label">AI Summary<br>智能摘要</div></div>
+        <div class="metric"><div class="big-number">6</div><div class="label">Human Review<br>人工复核</div></div>
+        <div class="metric"><div class="big-number">7</div><div class="label">Dashboard<br>评估看板</div></div>
+        <div class="metric"><div class="big-number">中/EN</div><div class="label">Bilingual UI<br>双语界面</div></div>
+      </div>
+      <div class="footer"><span>MedGuide AI</span><span>5 / 12</span></div>
+    </section>
+
+    <section class="slide">
+      <span class="eyebrow">05 · Architecture / 技术架构</span>
+      <h2>Lightweight, explainable, and demo-friendly<br>轻量、可解释、易演示</h2>
+      <div class="flow">
+        <div class="node">Streamlit UI<br>界面</div>
+        <div class="arrow">→</div>
+        <div class="node">Session State<br>会话状态</div>
+        <div class="arrow">→</div>
+        <div class="node">JSON Rules<br>规则数据</div>
+        <div class="arrow">→</div>
+        <div class="node">Risk Engine<br>风险引擎</div>
+        <div class="arrow">→</div>
+        <div class="node">AI / Review<br>摘要与复核</div>
+      </div>
+      <div class="grid-3" style="margin-top:30px;">
+        <div class="card"><h3>Runtime<br>运行环境</h3><p>Python + Streamlit<br>可部署到 Streamlit Community Cloud</p></div>
+        <div class="card"><h3>Data<br>数据</h3><p>Local JSON rules and sample cases<br>本地规则和样例病例</p></div>
+        <div class="card"><h3>AI<br>人工智能</h3><p>OpenRouter model: minimax/minimax-m2.5:free<br>没有 API key 时使用本地兜底</p></div>
+      </div>
+      <div class="footer"><span>MedGuide AI</span><span>6 / 12</span></div>
+    </section>
+
+    <section class="slide">
+      <span class="eyebrow">06 · Demo / 演示流程</span>
+      <h2>Keep the live demo within 2-3 minutes<br>现场 Demo 控制在 2-3 分钟</h2>
+      <div class="bilingual">
+        <div class="card blue">
+          <span class="lang-label">English</span>
+          <ol>
+            <li>Sign in with demo / demo123.</li>
+            <li>Load one sample case.</li>
+            <li>Complete intake and follow-up.</li>
+            <li>Show risk level, department, and reasoning.</li>
+            <li>Generate the AI Smart Summary.</li>
+            <li>Open human review or dashboard.</li>
+          </ol>
+        </div>
+        <div class="card blue">
+          <span class="lang-label">中文</span>
+          <ol>
+            <li>用 demo / demo123 登录。</li>
+            <li>载入一个示例病例。</li>
+            <li>完成基础信息和动态追问。</li>
+            <li>展示风险等级、建议科室和判断依据。</li>
+            <li>生成 AI 智能摘要。</li>
+            <li>进入人工复核或看板。</li>
+          </ol>
+        </div>
+      </div>
+      <div class="tagline">Live demo: https://medguide-ai-demo.streamlit.app/<br>Recommended case: chest pain + shortness of breath + cold sweats.</div>
+      <div class="footer"><span>MedGuide AI</span><span>7 / 12</span></div>
+    </section>
+
+    <section class="slide">
+      <span class="eyebrow">07 · AI Usage / AI 用法</span>
+      <h2>Where is AI used in this project?<br>这个项目哪里用到了 AI？</h2>
+      <div class="bilingual">
+        <div class="card blue">
+          <h3>Layer 1: AI-style Workflow<br>第一层：AI 式流程</h3>
+          <ul>
+            <li>Symptom category detection / 症状类别识别</li>
+            <li>Dynamic follow-up / 动态追问</li>
+            <li>Rule-based risk triage / 规则风险分诊</li>
+            <li>Structured output / 结构化输出</li>
+          </ul>
+        </div>
+        <div class="card blue">
+          <h3>Layer 2: Optional LLM<br>第二层：可选大模型</h3>
+          <ul>
+            <li>OpenRouter model `minimax/minimax-m2.5:free` for smart summaries. / 使用 OpenRouter 模型生成智能摘要。</li>
+            <li>The prompt forbids diagnosis, medication, and treatment advice. / Prompt 禁止诊断、用药和治疗建议。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tagline">AI organizes, reminds, and supports review; it does not replace clinicians.<br>AI 的角色是整理、提示、辅助复核，而不是替代医生。</div>
+      <div class="footer"><span>MedGuide AI</span><span>8 / 12</span></div>
+    </section>
+
+    <section class="slide">
+      <span class="eyebrow">08 · Safety / 安全设计</span>
+      <h2>In healthcare, safety matters more than flashy AI<br>医疗场景中，安全优先于炫技</h2>
+      <div class="bilingual">
+        <div class="card blue">
+          <span class="lang-label">English</span>
+          <ul>
+            <li>Chest pain + breathing difficulty → emergency recommendation.</li>
+            <li>Blood in stool or unable to eat/drink → see a doctor soon.</li>
+            <li>Fast-spreading rash with fever → urgent assessment.</li>
+            <li>The result page shows reasoning and disclaimer.</li>
+          </ul>
+        </div>
+        <div class="card danger">
+          <span class="lang-label">中文</span>
+          <ul>
+            <li>胸痛 + 呼吸困难 → 建议立即急诊。</li>
+            <li>便血或无法进食饮水 → 尽快线下就医。</li>
+            <li>皮疹快速扩散并发热 → 尽快评估。</li>
+            <li>结果页展示判断依据和免责声明。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>MedGuide AI</span><span>9 / 12</span></div>
+    </section>
+
+    <section class="slide">
+      <span class="eyebrow">09 · Benefits / 量化收益</span>
+      <h2>Efficiency, completeness, and consistency<br>效率、完整度、一致性</h2>
+      <table>
+        <thead>
+          <tr><th>Metric / 指标</th><th>Manual / 人工</th><th>Prototype / 原型</th><th>Improvement / 改进</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Average intake time / 平均采集时间</td><td>8 min</td><td>3 min</td><td><strong>-62.5%</strong></td></tr>
+          <tr><td>Structured completeness / 结构化完整率</td><td>60%</td><td>90%</td><td><strong>+50%</strong></td></tr>
+          <tr><td>Daily capacity / 日处理能力</td><td>50 cases</td><td>90 cases</td><td><strong>+80%</strong></td></tr>
+          <tr><td>Red-flag consistency / 红旗提示一致性</td><td>Experience-based</td><td>Rule-first</td><td><strong>More stable</strong></td></tr>
+        </tbody>
+      </table>
+      <p class="tiny" style="margin-top:18px;">These values are simulated course evaluation assumptions, not real hospital performance claims.<br>这些数值是课程模拟评估假设，不是真实医院数据。</p>
+      <div class="footer"><span>MedGuide AI</span><span>10 / 12</span></div>
+    </section>
+
+    <section class="slide">
+      <span class="eyebrow">10 · Strategy / 商业战略</span>
+      <h2>From technical prototype to business value<br>从技术原型到商业价值</h2>
+      <div class="bilingual">
+        <div class="card blue">
+          <h3>Target Customers<br>目标客户</h3>
+          <ul>
+            <li>Clinics and outpatient departments / 诊所与门诊部门</li>
+            <li>Online healthcare platforms / 互联网医疗平台</li>
+            <li>Corporate health management / 企业健康管理</li>
+            <li>Community healthcare centers / 社区医疗中心</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Business Model<br>商业模式</h3>
+          <ul>
+            <li>B2B SaaS subscription / 机构订阅</li>
+            <li>API integration / API 接入</li>
+            <li>Pilot deployment / 小规模试点</li>
+            <li>Safer than pure LLM / 比纯大模型更安全</li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer"><span>MedGuide AI</span><span>11 / 12</span></div>
+    </section>
+
+    <section class="slide">
+      <span class="eyebrow">11 · Reflection & Q&A / 反思与答疑</span>
+      <h2>We understand what the prototype cannot do yet<br>我们知道它还不能做什么</h2>
+      <div class="bilingual">
+        <div class="card danger">
+          <h3>Limitations / 局限性</h3>
+          <ul>
+            <li>Simulated cases, not real clinical data.</li>
+            <li>模拟病例，不是真实临床数据。</li>
+            <li>Limited symptom coverage and no clinical validation yet.</li>
+            <li>覆盖症状有限，尚未临床验证。</li>
+          </ul>
+        </div>
+        <div class="card blue">
+          <h3>Future Work / 未来优化</h3>
+          <ul>
+            <li>Expand specialty-specific rule libraries. / 扩展更多专科规则库。</li>
+            <li>Add database, access control, and audit logs. / 加入数据库、权限和审计日志。</li>
+            <li>Improve LLM-based symptom understanding and smart summaries. / 增强基于大模型的症状理解与智能摘要能力。</li>
+            <li>Run clinician-reviewed pilot testing in controlled settings. / 在可控场景中开展临床人员参与的小规模试点。</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tagline">The realistic value of AI in healthcare is not replacing doctors, but improving intake efficiency, risk visibility, and human decision support.<br>AI 在医疗中最现实的价值不是替代医生，而是提升预问诊效率、风险可见性和人工决策支持。</div>
+      <div class="footer"><span>Thank you / 谢谢</span><span>Q&A</span></div>
+    </section>
+  </main>
+
+  <div class="progress"><span id="progress"></span></div>
+  <div class="nav">
+    <button onclick="prevSlide()">Prev</button>
+    <button onclick="nextSlide()">Next</button>
+  </div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const progress = document.getElementById("progress");
+    let index = 0;
+
+    function showSlide(nextIndex) {
+      index = Math.max(0, Math.min(slides.length - 1, nextIndex));
+      slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
+      progress.style.width = `${((index + 1) / slides.length) * 100}%`;
+    }
+
+    function nextSlide() { showSlide(index + 1); }
+    function prevSlide() { showSlide(index - 1); }
+
+    document.addEventListener("keydown", (event) => {
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) nextSlide();
+      if (["ArrowLeft", "PageUp"].includes(event.key)) prevSlide();
+      if (event.key === "Home") showSlide(0);
+      if (event.key === "End") showSlide(slides.length - 1);
+    });
+
+    showSlide(0);
+  </script>
+</body>
+</html>
+
