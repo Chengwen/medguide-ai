@@ -13,7 +13,7 @@ Suggested summary points:
 
 - Problem: outpatient pre-consultation is time-consuming and information is often incomplete.
 - Solution: a bilingual Streamlit prototype with login, intake, dynamic follow-up, rule-based risk triage, optional AI summary, human review, and dashboard.
-- Technology: Python + Streamlit + local JSON rules and optional OpenAI Responses API integration.
+- Technology: Python + Streamlit + local JSON rules and optional OpenRouter OpenAI-compatible API integration with model `minimax/minimax-m2.5:free`.
 - Value: reduced intake time, improved structured information completeness, and more consistent red-flag reminders.
 - Boundary: the prototype supports triage workflow but does not provide diagnosis or treatment.
 
@@ -59,7 +59,7 @@ Important boundary:
 - Generate dynamic follow-up questions based on symptom category.
 - Identify red-flag symptoms using transparent rules.
 - Output risk level, recommended department, and structured summary.
-- Generate an optional AI Smart Summary using OpenAI API or a local fallback.
+- Generate an optional AI Smart Summary using the OpenRouter OpenAI-compatible API or a local fallback.
 - Provide a human review page and evaluation dashboard.
 
 ### 4.2 Measurable Objectives
@@ -78,7 +78,7 @@ Suggested targets for simulated evaluation:
 The current prototype includes:
 
 - `app.py`: main Streamlit application.
-- `.streamlit/config.toml`: Streamlit theme using primary color `#4a90e2`.
+- `.streamlit/config.toml`: Streamlit configuration for the runnable prototype.
 - `data/rules.json`: bilingual red-flag rule examples.
 - `data/sample_cases.json`: bilingual demo cases.
 - `requirements.txt`: dependency list.
@@ -92,7 +92,7 @@ The current prototype includes:
 | Intake | Collects basic patient and symptom information. |
 | Follow-up | Asks targeted questions based on symptom category. |
 | Result | Shows risk level, department, summary, reasoning, and red flags. |
-| AI Smart Summary | Uses OpenAI API when configured; otherwise uses a local fallback summary. |
+| AI Smart Summary | Uses the OpenRouter OpenAI-compatible API when configured; otherwise uses a local fallback summary. |
 | Human Review | Shows how staff can review and adjust AI-supported output. |
 | Dashboard | Supports quantified value and technical credibility discussion. |
 
@@ -156,7 +156,7 @@ The course prototype demonstrates AI-style application through:
 - Dynamic follow-up.
 - Structured summarization.
 - Risk explanation.
-- Optional LLM-generated triage summary through the OpenAI Responses API.
+- Optional LLM-generated triage summary through the OpenRouter OpenAI-compatible API with model `minimax/minimax-m2.5:free`.
 
 The current implementation keeps LLM use optional. When an API key is configured, prompt engineering is used for flexible summary generation while rule-based safety constraints remain in control.
 
