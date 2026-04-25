@@ -345,8 +345,6 @@ Backup demo:
 | Login page | Completed with demo accounts. |
 | Database decision | Documented: not required for course prototype. |
 | Optional OpenAI summary | Completed with local fallback. |
-| Main color `#4a90e2` | Applied in Streamlit theme and CSS. |
-| Blue vertical title bar removed | Completed. |
 | Dynamic follow-up | Completed for respiratory, digestive, and skin categories. |
 | Rule-based risk triage | Completed using local JSON rules. |
 | Human review | Completed. |
