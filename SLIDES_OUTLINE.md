@@ -82,26 +82,7 @@ Speaker focus:
 
 - Mention bilingual support: 中文 / English.
 
-## Slide 6. Live Demo Flow
-
-Recommended demo sequence:
-
-Live demo link: https://medguide-ai-demo.streamlit.app/
-
-1. Login with `demo / demo123`.
-2. Switch language if needed.
-3. Load one sample case.
-4. Complete intake.
-5. Answer follow-up questions.
-6. Show risk result.
-7. Generate AI Smart Summary.
-8. Open human review or dashboard.
-
-Backup plan:
-
-- Prepare screenshots in case live demo is slow.
-
-## Slide 7. Technical Architecture
+## Slide 6. Technical Architecture
 
 Content:
 
@@ -130,6 +111,25 @@ Speaker focus:
 - Explain why avoiding a database is reasonable for a course prototype.
 - Explain what would change in real deployment.
 - Explain that the OpenRouter API is optional and the app has a fallback for demo stability.
+
+## Slide 7. Live Demo Flow
+
+Recommended demo sequence:
+
+Live demo link: https://medguide-ai-demo.streamlit.app/
+
+1. Login with `demo / demo123`.
+2. Switch language if needed.
+3. Load one sample case.
+4. Complete intake.
+5. Answer follow-up questions.
+6. Show risk result.
+7. Generate AI Smart Summary.
+8. Open human review or dashboard.
+
+Backup plan:
+
+- Prepare screenshots in case live demo is slow.
 
 ## Slide 8. Rule and Safety Design
 
@@ -204,25 +204,10 @@ Q&A prompt:
 | Section | Slides | Time |
 | --- | --- | --- |
 | Problem and scope | 1-3 | 3 minutes |
-| Solution and demo | 4-6 | 5 minutes |
-| Technical design | 7-8 | 3 minutes |
+| Solution and technical design | 4-6 | 5 minutes |
+| Demo and safety | 7-8 | 3 minutes |
 | Value and strategy | 9-10 | 2.5 minutes |
 | Reflection and Q&A transition | 11-12 | 1.5 minutes |
-
-## Team Speaking Plan
-
-For a 4-person team:
-
-- Member A: Slides 1-3.
-- Member B: Slides 4-6 and live demo.
-- Member C: Slides 7-8.
-- Member D: Slides 9-12.
-
-For a 3-person team:
-
-- Member A: Slides 1-4.
-- Member B: Slides 5-8 and live demo.
-- Member C: Slides 9-12.
 
 ## High-Probability Q&A
 
@@ -268,3 +253,4 @@ The current prototype has limited symptom coverage and no real clinical validati
 - Keep bilingual labels where useful, but do not overcrowd slides.
 - Include screenshots of the actual Streamlit pages.
 - Keep the live demo under 3 minutes.
+
