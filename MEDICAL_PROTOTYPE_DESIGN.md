@@ -2,8 +2,7 @@
 
 **Project:** MedGuide AI: 医疗智能预问诊与风险分诊助手  
 **Team members:** Yiyi Shen, Qianfeng Song, Chengwen Sui, Yingchen Wang, and Luliang Zhao  
-**Current version:** Streamlit runnable prototype, updated 2026-04-22  
-**Primary color:** `#4a90e2`
+**Current version:** Streamlit runnable prototype, updated 2026-04-25
 
 ## 1. Product Goal
 
@@ -227,7 +226,7 @@ flowchart LR
     G --> H["Risk Evaluation"]
     D --> H
     H --> I["Result Page"]
-    I --> J["OpenAI / Local AI Summary"]
+    I --> J["OpenRouter / Local AI Summary"]
     I --> K["Human Review"]
     I --> L["Dashboard"]
 ```
@@ -344,7 +343,7 @@ Backup demo:
 | Bilingual UI | Completed. |
 | Login page | Completed with demo accounts. |
 | Database decision | Documented: not required for course prototype. |
-| Optional OpenAI summary | Completed with local fallback. |
+| Optional OpenRouter summary | Completed with local fallback. |
 | Dynamic follow-up | Completed for respiratory, digestive, and skin categories. |
 | Rule-based risk triage | Completed using local JSON rules. |
 | Human review | Completed. |
