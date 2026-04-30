@@ -19,19 +19,9 @@ The prototype demonstrates measurable business and operational value. In a simul
 
 The core argument of this project is that AI’s most realistic value in healthcare is not replacing doctors, but improving pre-consultation efficiency, risk visibility, and human review quality.
 
-## 2. Assignment Requirement Mapping
+## 2. Problem Background
 
-| Course requirement | How MedGuide AI satisfies it |
-| --- | --- |
-| Runnable prototype or deep AI analysis | The team built a runnable Streamlit prototype in `app.py`. |
-| Quantifiable benefits and business value | The report compares intake time, completeness, case capacity, and red-flag consistency. |
-| Technology strategy management or entrepreneurship | The project is positioned as a B2B workflow tool for clinics, outpatient departments, and online healthcare platforms. |
-| 15-minute final presentation | The project includes a bilingual HTML presentation and speaker notes. |
-| Critical reflection | The report discusses safety risk, LLM limitation, privacy, scope boundaries, and human oversight. |
-
-## 3. Problem Background
-
-### 3.1 Real-World Pain Points
+### 2.1 Real-World Pain Points
 
 Healthcare services often begin before the patient enters the consultation room. A patient may first describe symptoms to front-desk staff, a triage nurse, or an online pre-consultation form. In this stage, several problems frequently appear.
 
@@ -43,7 +33,7 @@ Third, red-flag symptoms require fast and visible escalation. Symptoms such as c
 
 Finally, healthcare resources are limited. Repetitive information collection consumes time that could otherwise be used for higher-value tasks. A pre-consultation support tool can help staff focus on cases that most need human judgment.
 
-### 3.2 Why AI Is Suitable for This Scenario
+### 2.2 Why AI Is Suitable for This Scenario
 
 AI is suitable here because the task is not final medical diagnosis; it is auxiliary information organization. The system can help convert free-text complaints into structured information, ask targeted follow-up questions, summarize key findings, and highlight red flags using transparent rules.
 
@@ -53,9 +43,9 @@ The project’s positioning is:
 
 > MedGuide AI is not an AI doctor. It is an AI-supported pre-consultation and risk triage assistant.
 
-## 4. Project Objectives
+## 3. Project Objectives
 
-### 4.1 Functional Objectives
+### 3.1 Functional Objectives
 
 The prototype aims to achieve the following functional goals:
 
@@ -70,7 +60,7 @@ The prototype aims to achieve the following functional goals:
 - Provide a human review page for triage staff.
 - Provide a dashboard for quantified value and technical credibility discussion.
 
-### 4.2 Measurable Objectives
+### 3.2 Measurable Objectives
 
 The project also defines measurable goals for simulated evaluation:
 
@@ -80,9 +70,9 @@ The project also defines measurable goals for simulated evaluation:
 - Maintain visible red-flag escalation in high-risk demo cases.
 - Make system output explainable enough for human review.
 
-## 5. Prototype Implementation
+## 4. Prototype Implementation
 
-### 5.1 Current Prototype Files
+### 4.1 Current Prototype Files
 
 The current implementation includes:
 
@@ -93,9 +83,8 @@ The current implementation includes:
 - `data/rules.json`: bilingual red-flag rule examples.
 - `data/sample_cases.json`: bilingual simulated sample cases.
 - `MedGuide_AI_Presentation.html`: bilingual presentation.
-- `PRESENTATION_SPEAKER_NOTES.md`: bilingual speaker notes.
 
-### 5.2 Implemented Pages
+### 4.2 Implemented Pages
 
 | Page | Purpose |
 | --- | --- |
@@ -108,7 +97,7 @@ The current implementation includes:
 | Human Review | Allows staff to review and adjust the system output. |
 | Dashboard | Shows sample-case consistency, red-flag rules, and simulated benefit metrics. |
 
-### 5.3 Login and Database Decision
+### 4.3 Login and Database Decision
 
 The course prototype does not require a database. The login page uses built-in demo accounts:
 
@@ -121,9 +110,9 @@ This decision is intentional. The project goal is to demonstrate workflow and AI
 
 In a real deployment, this design would need to be replaced with a secure authentication system, password hashing, role-based access control, audit logs, session expiration, encrypted storage, and privacy compliance.
 
-## 6. Technical Design
+## 5. Technical Design
 
-### 6.1 System Architecture
+### 5.1 System Architecture
 
 The prototype uses a lightweight architecture:
 
@@ -142,7 +131,7 @@ flowchart LR
 
 The Streamlit interface handles the full user flow. `st.session_state` stores the current workflow stage, patient data, follow-up answers, result, review notes, and AI summary. Local JSON files store sample cases and red-flag rules.
 
-### 6.2 Symptom Category Detection
+### 5.2 Symptom Category Detection
 
 The prototype uses keyword-based category detection to classify chief complaints into respiratory, digestive, skin, or general symptoms. For example:
 
@@ -152,13 +141,13 @@ The prototype uses keyword-based category detection to classify chief complaints
 
 This is not a clinical diagnostic model. It is a transparent, explainable method for choosing appropriate follow-up questions in a course prototype.
 
-### 6.3 Dynamic Follow-up
+### 5.3 Dynamic Follow-up
 
 After identifying a symptom category, the system asks targeted questions. For respiratory symptoms, it asks about breathing difficulty, chest pain, sputum, sputum color, and temperature. For digestive symptoms, it asks about vomiting, diarrhea, blood in stool, pain location, and ability to eat or drink. For skin concerns, it asks about itching, broken skin, discharge, spread speed, fever, and allergen exposure.
 
 This makes the system more flexible than a fixed questionnaire while remaining controlled and explainable.
 
-### 6.4 Rule-First Risk Triage
+### 5.4 Rule-First Risk Triage
 
 The risk engine combines intake information and follow-up answers to produce one of four risk levels:
 
@@ -171,7 +160,7 @@ The risk engine combines intake information and follow-up answers to produce one
 
 The most important technical strategy is rule-first safety. Red flags are checked before normal recommendations. If a high-risk pattern appears, such as pain plus breathing difficulty, the system escalates to emergency-level output.
 
-### 6.5 AI Smart Summary
+### 5.5 AI Smart Summary
 
 The AI Smart Summary module is designed as an optional LLM layer. When `OPENROUTER_API_KEY` is configured and the OpenAI-compatible SDK is available, the app calls OpenRouter with model `minimax/minimax-m2.5:free` to generate a concise pre-consultation summary for triage staff.
 
@@ -185,9 +174,9 @@ The prompt is constrained by several safety requirements:
 
 If no API key is available, the system generates a local fallback summary. This ensures that the project remains runnable during classroom demonstration even without network access, API quota, or secret configuration.
 
-## 7. Research and Evaluation Method
+## 6. Research and Evaluation Method
 
-### 7.1 Evaluation Design
+### 6.1 Evaluation Design
 
 The project uses simulated case evaluation. The team prepared bilingual sample cases across respiratory, digestive, skin, and high-risk scenarios. Each case includes patient profile, chief complaint, duration, severity, warning signs, follow-up answers, and expected risk level.
 
@@ -200,7 +189,7 @@ The evaluation process is:
 5. Check whether red flags and reasoning are visible.
 6. Record workflow efficiency and information completeness.
 
-### 7.2 Evaluation Metrics
+### 6.2 Evaluation Metrics
 
 | Metric | Measurement method |
 | --- | --- |
@@ -210,7 +199,7 @@ The evaluation process is:
 | Red-flag visibility | Check whether urgent symptoms appear clearly in result output. |
 | Human review readiness | Check whether the result is understandable enough for staff review. |
 
-### 7.3 Sample Cases
+### 6.3 Sample Cases
 
 The current prototype includes four simulated cases:
 
@@ -221,9 +210,9 @@ The current prototype includes four simulated cases:
 
 These cases are used only for course demonstration and are not real patient records.
 
-## 8. Quantifiable Benefits and Business Value
+## 7. Quantifiable Benefits and Business Value
 
-### 8.1 Efficiency Improvement
+### 7.1 Efficiency Improvement
 
 The following values are simulated course assumptions:
 
@@ -236,11 +225,11 @@ The following values are simulated course assumptions:
 
 The value is not only speed. The prototype also improves the quality and structure of information before human review.
 
-### 8.2 Operational Value
+### 7.2 Operational Value
 
 For clinics and outpatient departments, the system can reduce repetitive front-desk questioning and help staff identify cases that require faster attention. For online healthcare platforms, it can improve the quality of pre-consultation data before users enter a paid consultation or human review queue. For patients, it provides a clearer way to organize symptoms and understand what information matters.
 
-### 8.3 Business Value
+### 7.3 Business Value
 
 The project has potential as a B2B workflow-support product. Possible customer segments include:
 
@@ -259,7 +248,7 @@ Possible business models include:
 
 The competitive advantage is that MedGuide AI is more flexible than fixed questionnaires and safer than pure generative AI because it keeps rule-based risk control and human review.
 
-## 9. Technology Strategy and Entrepreneurship Perspective
+## 8. Technology Strategy and Entrepreneurship Perspective
 
 The technical design aligns with business goals in several ways.
 
@@ -273,7 +262,7 @@ Fourth, the system is modular. Rules, sample cases, follow-up questions, and AI 
 
 From an entrepreneurship perspective, the recommended strategy is to start with a narrow pilot: one or two symptom categories in a clinic or online consultation workflow. After validating workflow efficiency and user acceptance, the product can gradually expand to more specialties and integrate with account systems, databases, and audit logs.
 
-## 9.1 Future Development Roadmap
+### 8.1 Future Development Roadmap
 
 The project can be extended in four practical directions.
 
@@ -285,53 +274,51 @@ Third, the technical architecture can be upgraded for real deployment. Important
 
 Fourth, the project can move toward real-world validation. A realistic path would be to build clinician-reviewed rule libraries, conduct limited compliant pilot studies, measure workflow outcomes, and refine the system based on staff feedback and real operational data.
 
-## 10. Critical Reflection
+## 9. Critical Reflection
 
-### 10.1 Safety Risk
+### 9.1 Safety Risk
 
 The most serious risk is underestimating a high-risk case. In healthcare, a false reassurance can be more dangerous than an inconvenience caused by over-escalation. The project addresses this risk by using rule-first red-flag escalation and by keeping human review available.
 
 However, the current rule set is simplified for course demonstration. It should not be treated as a clinical rule library. Real deployment would require expert review, clinical validation, and continuous monitoring.
 
-### 10.2 LLM Reliability and Hallucination
+### 9.2 LLM Reliability and Hallucination
 
 If the OpenRouter / OpenAI-compatible API is used, the AI summary may still produce inaccurate or overly confident language if not constrained properly. The prototype reduces this risk by explicitly instructing the model not to diagnose, not to recommend medication, and not to recommend treatment.
 
 Even so, LLM output should remain auxiliary. The rule-based risk result and human review should remain the final control points.
 
-### 10.3 Privacy and Data Protection
+### 9.3 Privacy and Data Protection
 
 The course prototype does not process real patient data. This is a deliberate privacy decision. Real healthcare data is sensitive and would require secure storage, encryption, access control, audit logs, retention policies, and compliance review.
 
 If the product were deployed in a real environment, the architecture would need a secure backend and a clear data governance policy.
 
-### 10.4 Scope Limitation
+### 9.4 Scope Limitation
 
 The current prototype covers only limited scenarios: respiratory, digestive, skin, and high-risk example cases. It cannot generalize to all diseases, all specialties, all age groups, or all emergency contexts.
 
 The project should therefore be presented as a proof of concept, not a clinically validated product.
 
-### 10.5 Team Decision Reflection
+### 9.5 Team Decision Reflection
 
 The team deliberately avoided building an “AI doctor.” This was an important design decision. It reduced medical risk, improved explainability, and made the project more realistic for a course prototype.
 
 The team also chose not to require a database or OpenRouter API key for basic operation. This improved reproducibility and made the live demo more stable. At the same time, the project still shows how a real API-based AI module could be integrated.
 
-## 11. Team Contribution
+## 10. Team Contribution
 
-Because the project is a group assignment, all members should participate in the full process, final presentation, and Q&A. A recommended contribution structure is:
+The team member contribution is:
 
-| Team member | Suggested responsibility |
+| Team member | Responsibility |
 | --- | --- |
 | Yiyi Shen | Problem background, project positioning, opening slides. |
-| Qianfeng Song | Scope boundary, solution overview, safety framing. |
+| YingChen Wang | Scope boundary, solution overview, safety framing. |
 | Chengwen Sui | Prototype implementation, demo flow, technical architecture. |
-| Yingchen Wang | AI usage, rule logic, quantified benefits. |
-| Luliang Zhao | Business strategy, critical reflection, Q&A closing. |
+| Luliang Zhao | AI usage, rule logic, quantified benefits. |
+| Qianfeng Song | Business strategy, critical reflection, Q&A closing. |
 
-All team members are expected to understand the full project rather than only their assigned section.
-
-## 12. Conclusion
+## 11. Conclusion
 
 MedGuide AI demonstrates how AI can support healthcare workflows without replacing clinicians. The project focuses on a realistic and safer healthcare AI use case: pre-consultation intake, risk visibility, structured summarization, and human review support.
 
